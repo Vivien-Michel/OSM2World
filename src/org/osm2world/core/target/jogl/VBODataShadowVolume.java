@@ -1,8 +1,8 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_ARRAY_BUFFER;
-import static javax.media.opengl.GL.GL_STATIC_DRAW;
-import static javax.media.opengl.GL.GL_TRIANGLES;
+import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
+import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
+import static com.jogamp.opengl.GL.GL_TRIANGLES;
 import static org.osm2world.core.math.GeometryUtil.triangleVertexListFromTriangleFan;
 import static org.osm2world.core.math.GeometryUtil.triangleVertexListFromTriangleStrip;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL4;
 
 import org.osm2world.core.math.GeometryUtil;
 import org.osm2world.core.math.VectorXYZ;
@@ -24,7 +24,7 @@ import org.osm2world.core.target.common.Primitive.Type;
  */
 abstract class VBODataShadowVolume<BufferT extends Buffer> {
 	
-	protected GL3 gl;
+	protected GL4 gl;
 	protected AbstractPrimitiveShader shader;
 	
 	/** position of the light source casting the shadow volumes */
@@ -58,7 +58,7 @@ abstract class VBODataShadowVolume<BufferT extends Buffer> {
 	 * Creates a new vertex buffer object, calculates the shadow volumes for all
 	 * primitives and adds them to the buffer and uploads it to graphics memory.
 	 */
-	public VBODataShadowVolume(GL3 gl, Collection<Primitive> primitives, VectorXYZW lightPos) {
+	public VBODataShadowVolume(GL4 gl, Collection<Primitive> primitives, VectorXYZW lightPos) {
 		
 		this.gl = gl;
 		this.lightPos = lightPos;

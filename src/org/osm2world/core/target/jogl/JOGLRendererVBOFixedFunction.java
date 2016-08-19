@@ -1,18 +1,18 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_ARRAY_BUFFER;
-import static javax.media.opengl.GL.GL_FLOAT;
-import static javax.media.opengl.GL2GL3.GL_DOUBLE;
-import static javax.media.opengl.fixedfunc.GLPointerFunc.GL_NORMAL_ARRAY;
-import static javax.media.opengl.fixedfunc.GLPointerFunc.GL_TEXTURE_COORD_ARRAY;
-import static javax.media.opengl.fixedfunc.GLPointerFunc.GL_VERTEX_ARRAY;
+import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
+import static com.jogamp.opengl.GL.GL_FLOAT;
+import static com.jogamp.opengl.GL4.GL_DOUBLE;
+import static com.jogamp.opengl.fixedfunc.GLPointerFunc.GL_NORMAL_ARRAY;
+import static com.jogamp.opengl.fixedfunc.GLPointerFunc.GL_TEXTURE_COORD_ARRAY;
+import static com.jogamp.opengl.fixedfunc.GLPointerFunc.GL_VERTEX_ARRAY;
 import static org.osm2world.core.target.jogl.JOGLTargetFixedFunction.drawPrimitive;
 
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.util.Collection;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL4bc;
 
 import org.osm2world.core.math.VectorXYZ;
 import org.osm2world.core.math.VectorXZ;
@@ -32,11 +32,11 @@ import com.jogamp.common.nio.Buffers;
  */
 public class JOGLRendererVBOFixedFunction extends JOGLRendererVBO {
 	
-	protected GL2 gl;
+	protected GL4bc gl;
 	
 	private final class VBODataDouble extends VBODataFixedFunction<DoubleBuffer> {
 
-		public VBODataDouble(GL2 gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
+		public VBODataDouble(GL4bc gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
 			super(gl, textureManager, material, primitives);
 		}
 		
@@ -72,7 +72,7 @@ public class JOGLRendererVBOFixedFunction extends JOGLRendererVBO {
 	
 	private final class VBODataFloat extends VBODataFixedFunction<FloatBuffer> {
 
-		public VBODataFloat(GL2 gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
+		public VBODataFloat(GL4bc gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
 			super(gl, textureManager, material, primitives);
 		}
 		
@@ -106,7 +106,7 @@ public class JOGLRendererVBOFixedFunction extends JOGLRendererVBO {
 		
 	}
 	
-	JOGLRendererVBOFixedFunction(GL2 gl, JOGLTextureManager textureManager,
+	JOGLRendererVBOFixedFunction(GL4bc gl, JOGLTextureManager textureManager,
 			PrimitiveBuffer primitiveBuffer) {
 		
 		super(textureManager);

@@ -1,7 +1,7 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_ARRAY_BUFFER;
-import static javax.media.opengl.GL.GL_TRIANGLES;
+import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
+import static com.jogamp.opengl.GL.GL_TRIANGLES;
 import static org.osm2world.core.math.GeometryUtil.calculateTangentVectorsForTexLayer;
 import static org.osm2world.core.math.GeometryUtil.triangleNormalListFromTriangleStripOrFan;
 import static org.osm2world.core.math.GeometryUtil.triangleVertexListFromTriangleFan;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL4;
 
 import org.osm2world.core.math.VectorXYZ;
 import org.osm2world.core.math.VectorXYZW;
@@ -26,13 +26,13 @@ import org.osm2world.core.target.common.material.Material;
  */
 abstract class VBODataShader<BufferT extends Buffer> extends VBOData<BufferT> {
 	
-	protected GL3 gl;
+	protected GL4 gl;
 	protected AbstractPrimitiveShader shader;
 	
 	/**
-	 * @see VBOData#VBOData(javax.media.opengl.GL, JOGLTextureManager, Material, Collection)
+	 * @see VBOData#VBOData(com.jogamp.opengl.GL, JOGLTextureManager, Material, Collection)
 	 */
-	public VBODataShader(GL3 gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
+	public VBODataShader(GL4 gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
 		super(gl, textureManager, material, primitives);
 		this.gl = gl;
 	}

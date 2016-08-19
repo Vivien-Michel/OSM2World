@@ -1,8 +1,8 @@
 package org.osm2world.core.target.jogl;
 
 import static java.util.Arrays.asList;
-import static javax.media.opengl.GL.*;
-import static javax.media.opengl.GL2.GL_POLYGON;
+import static com.jogamp.opengl.GL.*;
+import static com.jogamp.opengl.GL4bc.GL_POLYGON;
 import static org.osm2world.core.target.jogl.NonAreaPrimitive.Type.*;
 
 import java.awt.Color;
@@ -10,7 +10,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.osm2world.core.math.VectorXYZ;
 import org.osm2world.core.math.VectorXZ;

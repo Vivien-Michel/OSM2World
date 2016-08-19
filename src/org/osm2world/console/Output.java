@@ -12,7 +12,6 @@ import java.util.Map;
 
 import static java.lang.Double.*;
 import org.apache.commons.configuration.Configuration;
-import org.osm2world.console.CLIArgumentsUtil.InputMode;
 import org.osm2world.console.CLIArgumentsUtil.OutputMode;
 import org.osm2world.core.ConversionFacade;
 import org.osm2world.core.ConversionFacade.Phase;
@@ -41,8 +40,6 @@ import org.osm2world.core.target.common.rendering.Projection;
 import org.osm2world.core.target.obj.ObjWriter;
 import org.osm2world.core.target.povray.POVRayWriter;
 import org.osm2world.core.util.functions.DefaultFactory;
-
-import sun.awt.SunToolkit.InfiniteLoop;
 
 public final class Output {
 
@@ -196,9 +193,11 @@ public final class Output {
 					Integer primitiveThresholdOBJ =
 						config.getInteger("primitiveThresholdOBJ", null);
 					if (primitiveThresholdOBJ == null) {
+						boolean underground = config.getBoolean("renderUnderground", true);
+                        
 						ObjWriter.writeObjFile(outputFile,
 								results.getMapData(), results.getMapProjection(),
-								camera, projection);
+								camera, projection, underground);
 					} else {
 						ObjWriter.writeObjFiles(outputFile,
 								results.getMapData(), results.getMapProjection(),

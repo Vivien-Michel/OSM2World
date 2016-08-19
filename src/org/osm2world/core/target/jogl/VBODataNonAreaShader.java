@@ -1,12 +1,12 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_ARRAY_BUFFER;
-import static javax.media.opengl.GL.GL_STATIC_DRAW;
+import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
+import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
 
 import java.awt.Color;
 import java.nio.Buffer;
 
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL4;
 
 import org.osm2world.core.math.VectorXYZ;
 
@@ -42,7 +42,7 @@ abstract class VBODataNonAreaShader<BufferT extends Buffer> {
 	/** returns the gl constant for the value type in the vbo */
 	protected abstract int glValueType();
 	
-	protected GL3 gl;
+	protected GL4 gl;
 	private NonAreaShader shader;
 	
 	/** the OpenGL constant for the type of the {@link NonAreaPrimitive} */
@@ -54,7 +54,7 @@ abstract class VBODataNonAreaShader<BufferT extends Buffer> {
 	/**
 	 * Creates a new vertex buffer object, adds all primitives to the buffer and uploads it to graphics memory.
 	 */
-	public VBODataNonAreaShader(GL3 gl, NonAreaShader shader, NonAreaPrimitive nonAreaPrimitive) {
+	public VBODataNonAreaShader(GL4 gl, NonAreaShader shader, NonAreaPrimitive nonAreaPrimitive) {
 		this.gl = gl;
 		this.shader = shader;
 		primitiveType= AbstractJOGLTarget.getGLConstant(nonAreaPrimitive.type);

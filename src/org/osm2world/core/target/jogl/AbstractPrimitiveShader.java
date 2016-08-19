@@ -1,6 +1,7 @@
 package org.osm2world.core.target.jogl;
 
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL4;
+
 import org.osm2world.core.target.common.material.Material;
 import org.osm2world.core.target.common.material.Material.Transparency;
 
@@ -19,7 +20,7 @@ public abstract class AbstractPrimitiveShader extends AbstractShader {
 	 */
 	protected boolean renderOnlySemiTransparent = false;
 
-	public AbstractPrimitiveShader(GL3 gl, String name) {
+	public AbstractPrimitiveShader(GL4 gl, String name) {
 		super(gl, name);
 	}
 

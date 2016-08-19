@@ -2,11 +2,11 @@ package org.osm2world.viewer.view;
 
 import java.awt.Color;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.awt.GLCanvas;
+import com.jogamp.opengl.GL4;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.awt.GLCanvas;
 import org.osm2world.core.target.jogl.AbstractJOGLTarget;
 import org.osm2world.viewer.model.Data;
 import org.osm2world.viewer.model.MessageManager;
@@ -56,7 +56,7 @@ public class ViewerGLCanvas extends GLCanvas {
 		@Override
 		public void display(GLAutoDrawable glDrawable) {
 			
-	        final GL gl = glDrawable.getGL();
+	        final GL4 gl = glDrawable.getGL().getGL4();
 	        
 	        AbstractJOGLTarget.clearGL(gl, new Color(0, 0, 0, 0));
 	        
@@ -114,7 +114,8 @@ public class ViewerGLCanvas extends GLCanvas {
 		@Override
 		public void init(GLAutoDrawable glDrawable) {
 			if ("shader".equals(data.getConfig().getString("joglImplementation"))) {
-				textRenderer = new TextRendererShader(glDrawable.getGL().getGL2ES2());
+				//textRenderer = new TextRendererShader(glDrawable.getGL().getGL4());
+				textRenderer = new TextRendererFixedFunction();
 			} else {
 				textRenderer = new TextRendererFixedFunction();
 			}
@@ -126,7 +127,7 @@ public class ViewerGLCanvas extends GLCanvas {
 		public void reshape(GLAutoDrawable gLDrawable,
 				int x, int y, int width, int height) {
 			
-			final GL gl = gLDrawable.getGL();
+			final GL4 gl = gLDrawable.getGL().getGL4();
 
 	        if (height <= 0) { // avoid a divide by zero error!
 	            height = 1;

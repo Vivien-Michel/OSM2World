@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -12,9 +14,8 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import javax.imageio.ImageIO;
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2GL3;
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL4;
 
 /**
  * Utility class to manage low level shader creation.
@@ -26,10 +27,10 @@ public class ShaderManager {
 	 * @param filename path to the resource containing the shader code
 	 * @return handle of the created vertex shader
 	 */
-	public static int createVertexShader(GL3 gl, String filename) {
+	public static int createVertexShader(GL4 gl, String filename) {
 
 		// get the unique id
-		int vertShader = gl.glCreateShader(GL3.GL_VERTEX_SHADER);
+		int vertShader = gl.glCreateShader(GL4.GL_VERTEX_SHADER);
 		if (vertShader == 0)
 			throw new RuntimeException("Unable to create vertex shader.");
 
@@ -39,7 +40,14 @@ public class ShaderManager {
 		String line;
 
 		// open the file and read the contents into the String array.
-		InputStream stream = System.class.getResourceAsStream(filename);
+		File initialFile = new File(filename);
+		InputStream stream =null;
+	    try {
+	    	stream = new FileInputStream(initialFile);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		//InputStream stream = System.class.getResourceAsStream(filename);
 		if (stream == null) {
 			throw new RuntimeException("Vertex shader not found in classpath: \""+ filename +"\"");
 		}
@@ -59,7 +67,7 @@ public class ShaderManager {
 
 		// acquire compilation status
 		IntBuffer shaderStatus = IntBuffer.allocate(1);
-		gl.glGetShaderiv(vertShader, GL3.GL_COMPILE_STATUS, shaderStatus);
+		gl.glGetShaderiv(vertShader, GL4.GL_COMPILE_STATUS, shaderStatus);
 
 		// check whether compilation was successful
 		if (shaderStatus.get() == GL.GL_FALSE) {
@@ -78,9 +86,9 @@ public class ShaderManager {
 	 * @param filename path to the resource containing the shader code
 	 * @return handle of the created fragment shader
 	 */
-	public static int createFragmentShader(GL3 gl, String filename) {
+	public static int createFragmentShader(GL4 gl, String filename) {
 
-		int fragShader = gl.glCreateShader(GL3.GL_FRAGMENT_SHADER);
+		int fragShader = gl.glCreateShader(GL4.GL_FRAGMENT_SHADER);
 		if (fragShader == 0)
 			return 0;
 
@@ -88,7 +96,14 @@ public class ShaderManager {
 		fragCode[0] = "";
 		String line;
 
-		InputStream stream = System.class.getResourceAsStream(filename);
+		// open the file and read the contents into the String array.
+		File initialFile = new File(filename);
+		InputStream stream =null;
+		try {
+			stream = new FileInputStream(initialFile);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
 		if (stream == null) {
 			throw new RuntimeException("Fragment shader not found in classpath: \""+ filename +"\"");
 		}
@@ -106,7 +121,7 @@ public class ShaderManager {
 		
 		// acquire compilation status
 		IntBuffer shaderStatus = IntBuffer.allocate(1);
-		gl.glGetShaderiv(fragShader, GL3.GL_COMPILE_STATUS, shaderStatus);
+		gl.glGetShaderiv(fragShader, GL4.GL_COMPILE_STATUS, shaderStatus);
 
 		// check whether compilation was successful
 		if (shaderStatus.get() == GL.GL_FALSE) {
@@ -122,9 +137,9 @@ public class ShaderManager {
 	/**
 	 * Prints the shader log to System.out
 	 */
-	public static boolean printShaderInfoLog(GL3 gl, int shader) {
+	public static boolean printShaderInfoLog(GL4 gl, int shader) {
 		IntBuffer ival = IntBuffer.allocate(1);
-		gl.glGetShaderiv(shader, GL3.GL_INFO_LOG_LENGTH,
+		gl.glGetShaderiv(shader, GL4.GL_INFO_LOG_LENGTH,
 				ival);
 
 		int size = ival.get();
@@ -145,9 +160,9 @@ public class ShaderManager {
 	 * @param prog handle to the shader program
 	 * @return the program log as String
 	 */
-	public static String getProgramInfoLog(GL3 gl, int prog) {
+	public static String getProgramInfoLog(GL4 gl, int prog) {
 		IntBuffer ival = IntBuffer.allocate(1);
-		gl.glGetProgramiv(prog, GL3.GL_INFO_LOG_LENGTH,
+		gl.glGetProgramiv(prog, GL4.GL_INFO_LOG_LENGTH,
 				ival);
 
 		int size = ival.get();
@@ -165,9 +180,9 @@ public class ShaderManager {
 	/**
 	 * Prints the program log to System.out
 	 */
-	public static boolean printProgramInfoLog(GL3 gl, int prog) {
+	public static boolean printProgramInfoLog(GL4 gl, int prog) {
 		IntBuffer ival = IntBuffer.allocate(1);
-		gl.glGetProgramiv(prog, GL3.GL_INFO_LOG_LENGTH,
+		gl.glGetProgramiv(prog, GL4.GL_INFO_LOG_LENGTH,
 				ival);
 
 		int size = ival.get();
@@ -186,13 +201,13 @@ public class ShaderManager {
 	/**
 	 * Save a depth buffer texture to a file as png.
 	 */
-	public static void saveDepthBuffer(File file, int depthBufferHandle, int width, int height, GL2GL3 gl) {
+	public static void saveDepthBuffer(File file, int depthBufferHandle, int width, int height, GL4 gl) {
 		// create buffer to store image
 		FloatBuffer buffer=FloatBuffer.allocate(width*height);//ByteBuffer.allocate(shadowMapWidth*shadowMapHeight*4).asFloatBuffer(); 
 		
 		// load image in buffer
 		gl.glBindTexture(GL.GL_TEXTURE_2D, depthBufferHandle);
-		gl.glGetTexImage(GL.GL_TEXTURE_2D, 0, GL3.GL_DEPTH_COMPONENT, GL.GL_FLOAT, buffer);
+		gl.glGetTexImage(GL.GL_TEXTURE_2D, 0, GL4.GL_DEPTH_COMPONENT, GL.GL_FLOAT, buffer);
 		buffer.rewind();
 
 		// create buffered image

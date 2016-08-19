@@ -18,13 +18,13 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GLAutoDrawable;
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLDrawableFactory;
-import javax.media.opengl.GLEventListener;
-import javax.media.opengl.GLOffscreenAutoDrawable;
-import javax.media.opengl.GLProfile;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GLAutoDrawable;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLDrawableFactory;
+import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.GLOffscreenAutoDrawable;
+import com.jogamp.opengl.GLProfile;
 
 import org.apache.commons.configuration.Configuration;
 import org.osm2world.console.CLIArgumentsUtil.OutputMode;
@@ -153,7 +153,7 @@ public class ImageExporter {
 
 		GLProfile profile;
 		if ("shader".equals(config.getString("joglImplementation"))) {
-			profile = GLProfile.get(GLProfile.GL3);
+			profile = GLProfile.get(GLProfile.GL4bc);
 		} else {
 			profile = GLProfile.get(GLProfile.GL2);
 		}
@@ -188,7 +188,7 @@ public class ImageExporter {
 		pBufferSizeY = min(canvasLimit, expectedMaxSizeY);
 				
 		drawable = factory.createOffscreenAutoDrawable(null,
-				cap, null, pBufferSizeX, pBufferSizeY, null);
+				cap, null, pBufferSizeX, pBufferSizeY);
 		listener = new ImageExporterGLEventListener();
 		drawable.addGLEventListener(listener);
 
@@ -324,12 +324,12 @@ public class ImageExporter {
 			int SSAOkernelSize = config.getInt("SSAOkernelSize", 16);
 			float SSAOradius = config.getFloat("SSAOradius", 1);
 			boolean overwriteProjectionClippingPlanes = "true".equals(config.getString("overwriteProjectionClippingPlanes"));
-			target = new JOGLTargetShader(gl.getGL3(),
+			target = new JOGLTargetShader(gl.getGL4(),
 					new JOGLRenderingParameters(CCW, false, true, drawBoundingBox, shadowVolumes, shadowMaps, shadowMapWidth, shadowMapHeight,
 			    			shadowMapCameraFrustumPadding, useSSAO, SSAOkernelSize, SSAOradius, overwriteProjectionClippingPlanes),
 					GlobalLightingParameters.DEFAULT);
 		} else {
-			target = new JOGLTargetFixedFunction(gl.getGL2(),
+			target = new JOGLTargetFixedFunction(gl.getGL4bc(),
 					new JOGLRenderingParameters(CCW, false, true),
 					GlobalLightingParameters.DEFAULT);
 		}
@@ -605,7 +605,7 @@ public class ImageExporter {
 			if (this.xSize != xSize || this.ySize != ySize) {
 				// disable display while resizing. all display calls need to be from @writeImageFile
 				nodisplay = true;
-				drawable.setSize(xSize, ySize);
+				drawable.setSurfaceSize(xSize, ySize);
 				nodisplay = false;
 			}
 			

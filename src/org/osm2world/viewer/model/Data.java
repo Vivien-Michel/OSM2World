@@ -29,7 +29,6 @@ public class Data extends Observable {
 	public void setConfig(Configuration config) {
 		
 		this.config = config;
-		
 		this.setChanged();
 		this.notifyObservers();
 		

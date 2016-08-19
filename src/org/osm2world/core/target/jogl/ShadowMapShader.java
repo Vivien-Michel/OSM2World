@@ -1,12 +1,12 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_CCW;
-import static javax.media.opengl.GL.GL_COLOR_BUFFER_BIT;
-import static javax.media.opengl.GL.GL_CULL_FACE;
-import static javax.media.opengl.GL.GL_DEPTH_BUFFER_BIT;
-import static javax.media.opengl.GL.GL_DEPTH_TEST;
-import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_MODELVIEW;
-import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
+import static com.jogamp.opengl.GL.GL_CCW;
+import static com.jogamp.opengl.GL.GL_COLOR_BUFFER_BIT;
+import static com.jogamp.opengl.GL.GL_CULL_FACE;
+import static com.jogamp.opengl.GL.GL_DEPTH_BUFFER_BIT;
+import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
+import static com.jogamp.opengl.fixedfunc.GLMatrixFunc.GL_MODELVIEW;
+import static com.jogamp.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -15,11 +15,8 @@ import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.media.opengl.GL;
-import javax.media.opengl.GL3;
-
-import jogamp.opengl.ProjectFloat;
-
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL4;
 import org.osm2world.core.math.AxisAlignedBoundingBoxXYZ;
 import org.osm2world.core.math.VectorXYZ;
 import org.osm2world.core.target.common.lighting.GlobalLightingParameters;
@@ -60,7 +57,7 @@ public class ShadowMapShader extends DepthBufferShader {
 	 */
 	private PMVMatrix pmvMat;
 	
-	public ShadowMapShader(GL3 gl) {
+	public ShadowMapShader(GL4 gl) {
 		super(gl);
 		
 		pmvMat = new PMVMatrix();
@@ -81,12 +78,12 @@ public class ShadowMapShader extends DepthBufferShader {
 
 		gl.glTexImage2D(GL.GL_TEXTURE_2D,          // target texture type
 		        0,                                  // mipmap LOD level
-		        GL3.GL_DEPTH_COMPONENT,         // internal pixel format
+		        GL4.GL_DEPTH_COMPONENT,         // internal pixel format
 		                                            //GL_DEPTH_COMPONENT
 		        shadowMapWidth,                     // width of generated image
 		        shadowMapHeight,                    // height of generated image
 		        0,                          // border of image
-		        GL3.GL_DEPTH_COMPONENT,     // external pixel format 
+		        GL4.GL_DEPTH_COMPONENT,     // external pixel format 
 		        GL.GL_UNSIGNED_BYTE,        // datatype for each value
 		        null);  // buffer to store the texture in memory
 
@@ -99,17 +96,17 @@ public class ShadowMapShader extends DepthBufferShader {
 		 * This means the fragment lies outside of the lights frustum and no shadow should be applied.
 		 * Therefore we use CLAMP_TO_BORDER with a border of (1.0, 0.0, 0.0, 0.0)
 		 */
-		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL3.GL_CLAMP_TO_BORDER);
-		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL3.GL_CLAMP_TO_BORDER);
+		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL4.GL_CLAMP_TO_BORDER);
+		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL4.GL_CLAMP_TO_BORDER);
 		float [] border = {1.0f, 0.0f, 0.0f, 0.0f};
-		gl.glTexParameterfv(GL.GL_TEXTURE_2D, GL3.GL_TEXTURE_BORDER_COLOR, border, 0);
+		gl.glTexParameterfv(GL.GL_TEXTURE_2D, GL4.GL_TEXTURE_BORDER_COLOR, border, 0);
 		
 		/* special for depth textures: do not retrieve the texture values, but the result of a comparison.
 		 * compare the third value (r) of the texture coordinate against the depth value stored at the texture coordinate (s,t)
 		 * result will be 1.0 if r is less than the texture value (which means the fragment is nearer) and 0.0 otherwise
 		 */
-		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL3.GL_TEXTURE_COMPARE_MODE, GL3.GL_COMPARE_REF_TO_TEXTURE);
-		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL3.GL_TEXTURE_COMPARE_FUNC, GL.GL_LESS);
+		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL4.GL_TEXTURE_COMPARE_MODE, GL4.GL_COMPARE_REF_TO_TEXTURE);
+		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL4.GL_TEXTURE_COMPARE_FUNC, GL.GL_LESS);
 
 		gl.glActiveTexture(GL.GL_TEXTURE0);
 		gl.glBindTexture(GL.GL_TEXTURE_2D, depthBufferHandle);
@@ -164,8 +161,8 @@ public class ShadowMapShader extends DepthBufferShader {
 
 		//Disable color buffer
 		//http://stackoverflow.com/questions/12546368/render-the-depth-buffer-into-a-texture-using-a-frame-buffer
-		//gl.glDrawBuffer(GL2.GL_NONE);
-		//gl.glReadBuffer(GL2.GL_NONE);
+		//gl.glDrawBuffer(GL4bc.GL_NONE);
+		//gl.glReadBuffer(GL4bc.GL_NONE);
 
 		//Set pixels ((width*2)* (height*2))
 		//It has to have twice the size of shadowmap size
@@ -213,12 +210,12 @@ public class ShadowMapShader extends DepthBufferShader {
 	
 			gl.glTexImage2D(GL.GL_TEXTURE_2D,          // target texture type
 			        0,                                  // mipmap LOD level
-			        GL3.GL_DEPTH_COMPONENT,         // internal pixel format
+			        GL4.GL_DEPTH_COMPONENT,         // internal pixel format
 			                                            //GL_DEPTH_COMPONENT
 			        shadowMapWidth,                     // width of generated image
 			        shadowMapHeight,                    // height of generated image
 			        0,                          // border of image
-			        GL3.GL_DEPTH_COMPONENT,     // external pixel format 
+			        GL4.GL_DEPTH_COMPONENT,     // external pixel format 
 			        GL.GL_UNSIGNED_BYTE,        // datatype for each value
 			        null);  // buffer to store the texture in memory
 
@@ -309,12 +306,12 @@ public class ShadowMapShader extends DepthBufferShader {
 		
 		// camera PMV Matrix:
 		FloatBuffer camPMvMat = FloatBuffer.allocate(16);
-		FloatUtil.multMatrixf(cameraPMV.glGetPMatrixf(), cameraPMV.glGetMvMatrixf(), camPMvMat);
+		FloatUtil.multMatrix(cameraPMV.glGetPMatrixf(), cameraPMV.glGetMvMatrixf(), camPMvMat.array());
 		
 		// transform light into camera space (unit cube)
 		float[] lightPos = {(float)lighting.lightFromDirection.x, (float)lighting.lightFromDirection.y, -(float)lighting.lightFromDirection.z, 0};
 		float[] lightPosCam = new float[4];
-		FloatUtil.multMatrixVecf(camPMvMat, lightPos, lightPosCam);
+		FloatUtil.multMatrixVec(camPMvMat, lightPos, lightPosCam);
 		
 		// set view and projection matrices to light source
 		PMVMatrix pmvMatL = new PMVMatrix();
@@ -404,7 +401,7 @@ public class ShadowMapShader extends DepthBufferShader {
 		ArrayList<VectorXYZ> corners = new ArrayList<VectorXYZ>();
 		for (VectorXYZ corner : primitivesBoundingBox.corners()) {
 			float[] result = new float[4];
-			FloatUtil.multMatrixVecf(lightPMV.glGetMvMatrixf(), new float[]{(float)corner.x, (float)corner.y, (float)corner.z, 1}, result);
+			FloatUtil.multMatrixVec(lightPMV.glGetMvMatrixf(), new float[]{(float)corner.x, (float)corner.y, (float)corner.z, 1}, result);
 			corners.add(new VectorXYZ(result[0]/result[3], result[1]/result[3], result[2]/result[3]));
 		}
 		AxisAlignedBoundingBoxXYZ frustum = new AxisAlignedBoundingBoxXYZ(corners);
@@ -425,11 +422,12 @@ public class ShadowMapShader extends DepthBufferShader {
 		 */
 		FloatBuffer cameraP_inverse = FloatBuffer.allocate(16);
 		FloatBuffer cameraPMV_inverse = FloatBuffer.allocate(16);
-		ProjectFloat p = new ProjectFloat();
-		p.gluInvertMatrixf(cameraPMV.glGetPMatrixf(), cameraP_inverse);
-		FloatUtil.multMatrixf(cameraPMV.glGetMviMatrixf(), cameraP_inverse, cameraPMV_inverse);
+		
+		gluInvertMatrixf(cameraPMV.glGetPMatrixf(), cameraP_inverse);
+		
+		FloatUtil.multMatrix(cameraPMV.glGetMviMatrixf(), cameraP_inverse, cameraPMV_inverse.array());
 		FloatBuffer NDC2light = FloatBuffer.allocate(16);
-		FloatUtil.multMatrixf(lightPMV.glGetMvMatrixf(), cameraPMV_inverse, NDC2light);
+		FloatUtil.multMatrix(lightPMV.glGetMvMatrixf(), cameraPMV_inverse, NDC2light.array());
 		
 		/*
 		 * transform screen space bounding box to light space
@@ -441,7 +439,7 @@ public class ShadowMapShader extends DepthBufferShader {
 				for (int z = -1; z<=1; z+=2) {
 					float[] NDCcorner = {x, y, z, 1};
 					float[] result = new float[4];
-					FloatUtil.multMatrixVecf(NDC2light, NDCcorner, result);
+					FloatUtil.multMatrixVec(NDC2light, NDCcorner, result);
 					corners.add(new VectorXYZ(result[0]/result[3], result[1]/result[3], -result[2]/result[3]));
 				}
 			}
@@ -450,6 +448,137 @@ public class ShadowMapShader extends DepthBufferShader {
 		return frustum;
 	}
 	
+	private void gluInvertMatrixf(FloatBuffer glGetPMatrixf, FloatBuffer cameraP_inverse) {
+		float det;
+		float[] m = glGetPMatrixf.array();
+		float[] inv = new float[16];
+		int i;
+		
+		inv[0] = m[5]  * m[10] * m[15] - 
+	             m[5]  * m[11] * m[14] - 
+	             m[9]  * m[6]  * m[15] + 
+	             m[9]  * m[7]  * m[14] +
+	             m[13] * m[6]  * m[11] - 
+	             m[13] * m[7]  * m[10];
+
+	    inv[4] = -m[4]  * m[10] * m[15] + 
+	              m[4]  * m[11] * m[14] + 
+	              m[8]  * m[6]  * m[15] - 
+	              m[8]  * m[7]  * m[14] - 
+	              m[12] * m[6]  * m[11] + 
+	              m[12] * m[7]  * m[10];
+	    
+	    inv[8] = m[4]  * m[9] * m[15] - 
+	             m[4]  * m[11] * m[13] - 
+	             m[8]  * m[5] * m[15] + 
+	             m[8]  * m[7] * m[13] + 
+	             m[12] * m[5] * m[11] - 
+	             m[12] * m[7] * m[9];
+
+	    inv[12] = -m[4]  * m[9] * m[14] + 
+	               m[4]  * m[10] * m[13] +
+	               m[8]  * m[5] * m[14] - 
+	               m[8]  * m[6] * m[13] - 
+	               m[12] * m[5] * m[10] + 
+	               m[12] * m[6] * m[9];
+
+	    inv[1] = -m[1]  * m[10] * m[15] + 
+	              m[1]  * m[11] * m[14] + 
+	              m[9]  * m[2] * m[15] - 
+	              m[9]  * m[3] * m[14] - 
+	              m[13] * m[2] * m[11] + 
+	              m[13] * m[3] * m[10];
+
+	    inv[5] = m[0]  * m[10] * m[15] - 
+	             m[0]  * m[11] * m[14] - 
+	             m[8]  * m[2] * m[15] + 
+	             m[8]  * m[3] * m[14] + 
+	             m[12] * m[2] * m[11] - 
+	             m[12] * m[3] * m[10];
+	    
+	    inv[9] = -m[0]  * m[9] * m[15] + 
+	              m[0]  * m[11] * m[13] + 
+	              m[8]  * m[1] * m[15] - 
+	              m[8]  * m[3] * m[13] - 
+	              m[12] * m[1] * m[11] + 
+	              m[12] * m[3] * m[9];
+
+	    inv[13] = m[0]  * m[9] * m[14] - 
+	              m[0]  * m[10] * m[13] - 
+	              m[8]  * m[1] * m[14] + 
+	              m[8]  * m[2] * m[13] + 
+	              m[12] * m[1] * m[10] - 
+	              m[12] * m[2] * m[9];
+
+	    inv[2] = m[1]  * m[6] * m[15] - 
+	             m[1]  * m[7] * m[14] - 
+	             m[5]  * m[2] * m[15] + 
+	             m[5]  * m[3] * m[14] + 
+	             m[13] * m[2] * m[7] - 
+	             m[13] * m[3] * m[6];
+
+	    inv[6] = -m[0]  * m[6] * m[15] + 
+	              m[0]  * m[7] * m[14] + 
+	              m[4]  * m[2] * m[15] - 
+	              m[4]  * m[3] * m[14] - 
+	              m[12] * m[2] * m[7] + 
+	              m[12] * m[3] * m[6];
+
+	    inv[10] = m[0]  * m[5] * m[15] - 
+	              m[0]  * m[7] * m[13] - 
+	              m[4]  * m[1] * m[15] + 
+	              m[4]  * m[3] * m[13] + 
+	              m[12] * m[1] * m[7] - 
+	              m[12] * m[3] * m[5];
+
+	    inv[14] = -m[0]  * m[5] * m[14] + 
+	               m[0]  * m[6] * m[13] + 
+	               m[4]  * m[1] * m[14] - 
+	               m[4]  * m[2] * m[13] - 
+	               m[12] * m[1] * m[6] + 
+	               m[12] * m[2] * m[5];
+
+	    inv[3] = -m[1] * m[6] * m[11] + 
+	              m[1] * m[7] * m[10] + 
+	              m[5] * m[2] * m[11] - 
+	              m[5] * m[3] * m[10] - 
+	              m[9] * m[2] * m[7] + 
+	              m[9] * m[3] * m[6];
+
+	    inv[7] = m[0] * m[6] * m[11] - 
+	             m[0] * m[7] * m[10] - 
+	             m[4] * m[2] * m[11] + 
+	             m[4] * m[3] * m[10] + 
+	             m[8] * m[2] * m[7] - 
+	             m[8] * m[3] * m[6];
+
+	    inv[11] = -m[0] * m[5] * m[11] + 
+	               m[0] * m[7] * m[9] + 
+	               m[4] * m[1] * m[11] - 
+	               m[4] * m[3] * m[9] - 
+	               m[8] * m[1] * m[7] + 
+	               m[8] * m[3] * m[5];
+
+	    inv[15] = m[0] * m[5] * m[10] - 
+	              m[0] * m[6] * m[9] - 
+	              m[4] * m[1] * m[10] + 
+	              m[4] * m[2] * m[9] + 
+	              m[8] * m[1] * m[6] - 
+	              m[8] * m[2] * m[5];
+	    
+	    det = m[0] * inv[0] + m[1] * inv[4] + m[2] * inv[8] + m[3] * inv[12];
+
+	    if (det == 0){
+	    	return;
+	    }
+	    det = 1.0f / det;
+
+	    for (i = 0; i < 16; i++){
+	    	cameraP_inverse.array()[i] = inv[i] * det;
+	    }
+			
+	}
+
 	/**
 	 * {@inheritDoc}
 	 * Only primitives that support shadow will get rendered. For opaque objects see {@link #setRenderOpaque(boolean)}

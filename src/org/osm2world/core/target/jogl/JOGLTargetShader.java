@@ -1,31 +1,29 @@
 package org.osm2world.core.target.jogl;
 
 import static java.util.Arrays.asList;
-import static javax.media.opengl.GL.GL_ARRAY_BUFFER;
-import static javax.media.opengl.GL.GL_BACK;
-import static javax.media.opengl.GL.GL_CCW;
-import static javax.media.opengl.GL.GL_CULL_FACE;
-import static javax.media.opengl.GL.GL_DEPTH_TEST;
-import static javax.media.opengl.GL.GL_FRONT_AND_BACK;
-import static javax.media.opengl.GL.GL_REPEAT;
-import static javax.media.opengl.GL.GL_STATIC_DRAW;
-import static javax.media.opengl.GL.GL_TEXTURE0;
-import static javax.media.opengl.GL.GL_TEXTURE_2D;
-import static javax.media.opengl.GL.GL_TEXTURE_WRAP_S;
-import static javax.media.opengl.GL.GL_TEXTURE_WRAP_T;
-import static javax.media.opengl.GL2GL3.GL_FILL;
-import static javax.media.opengl.GL2GL3.GL_LINE;
-import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_MODELVIEW;
-import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
+import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
+import static com.jogamp.opengl.GL.GL_BACK;
+import static com.jogamp.opengl.GL.GL_CCW;
+import static com.jogamp.opengl.GL.GL_CULL_FACE;
+import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
+import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
+import static com.jogamp.opengl.GL.GL_REPEAT;
+import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
+import static com.jogamp.opengl.GL.GL_TEXTURE0;
+import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
+import static com.jogamp.opengl.GL.GL_TEXTURE_WRAP_S;
+import static com.jogamp.opengl.GL.GL_TEXTURE_WRAP_T;
+import static com.jogamp.opengl.GL4.GL_FILL;
+import static com.jogamp.opengl.GL4.GL_LINE;
+import static com.jogamp.opengl.fixedfunc.GLMatrixFunc.GL_MODELVIEW;
+import static com.jogamp.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
 
 import java.awt.Color;
 import java.io.File;
 import java.nio.FloatBuffer;
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.GL2GL3;
-import javax.media.opengl.GL3;
-
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL4bc;
+import com.jogamp.opengl.GL4;
 import org.osm2world.core.math.AxisAlignedBoundingBoxXYZ;
 import org.osm2world.core.math.AxisAlignedBoundingBoxXZ;
 import org.osm2world.core.math.VectorXYZ;
@@ -47,7 +45,7 @@ public class JOGLTargetShader extends AbstractJOGLTarget implements JOGLTarget {
 	private SSAOShader ssaoShader;
 	private NonAreaShader nonAreaShader;
 	private BackgroundShader backgroundShader;
-	private GL3 gl;
+	private GL4 gl;
 	
 	/**
 	 * PMVMatrix for rendering the world from camera perspective.
@@ -59,7 +57,7 @@ public class JOGLTargetShader extends AbstractJOGLTarget implements JOGLTarget {
 	private AxisAlignedBoundingBoxXZ xzBoundary;
 	private boolean showShadowPerspective;
 	
-	public JOGLTargetShader(GL3 gl, JOGLRenderingParameters renderingParameters,
+	public JOGLTargetShader(GL4 gl, JOGLRenderingParameters renderingParameters,
 			GlobalLightingParameters globalLightingParameters) {
 		super(gl, renderingParameters, globalLightingParameters);
 		defaultShader = new DefaultShader(gl);
@@ -200,7 +198,7 @@ public class JOGLTargetShader extends AbstractJOGLTarget implements JOGLTarget {
 		
 		for (VectorXYZ corner : boundingBox.corners()) {
 			float[] result = new float[4];
-			FloatUtil.multMatrixVecf(camMat.glGetMvMatrixf(),
+			FloatUtil.multMatrixVec(camMat.glGetMvMatrixf(),
 					new float[]{(float)corner.x, (float)corner.y, (float)corner.z, 1}, result);
 			VectorXYZ cornerCam = new VectorXYZ(result[0]/result[3], result[1]/result[3], result[2]/result[3]);
 			double depth = -cornerCam.z;
@@ -322,11 +320,11 @@ public class JOGLTargetShader extends AbstractJOGLTarget implements JOGLTarget {
 			
 			/* Render shadow volumes with depth-fail algorithm. Uses the previously filled depth buffer */
 			int[] drawbuffer = new int[1];
-			gl.glGetIntegerv(GL2GL3.GL_DRAW_BUFFER, drawbuffer, 0);
+			gl.glGetIntegerv(GL4.GL_DRAW_BUFFER, drawbuffer, 0);
 			gl.glDrawBuffer(GL.GL_NONE);
 			gl.glEnable(GL.GL_STENCIL_TEST);
 			gl.glDepthMask(false);
-		    gl.glEnable(GL3.GL_DEPTH_CLAMP); // used to clamp the infinity big shadow volumes
+		    gl.glEnable(GL4.GL_DEPTH_CLAMP); // used to clamp the infinity big shadow volumes
 		    gl.glDisable(GL_CULL_FACE);
 
 		    // We need the stencil test to be enabled but we want it
@@ -351,7 +349,7 @@ public class JOGLTargetShader extends AbstractJOGLTarget implements JOGLTarget {
 
 		    // Restore local stuff
 		    gl.glDepthMask(true);
-		    gl.glDisable(GL3.GL_DEPTH_CLAMP);
+		    gl.glDisable(GL4.GL_DEPTH_CLAMP);
 		    gl.glEnable(GL_CULL_FACE);
 		    
 		    /* Render scene in shadow */
@@ -437,7 +435,7 @@ public class JOGLTargetShader extends AbstractJOGLTarget implements JOGLTarget {
 		}
 	}
 	
-	static final void applyRenderingParameters(GL3 gl,
+	static final void applyRenderingParameters(GL4 gl,
 			JOGLRenderingParameters parameters) {
 		
 		/* backface culling */
@@ -488,7 +486,7 @@ public class JOGLTargetShader extends AbstractJOGLTarget implements JOGLTarget {
 	}
 
 	/**
-	 * similar to {@link #applyProjectionMatrices(GL2, Projection)},
+	 * similar to {@link #applyProjectionMatrices(GL4bc, Projection)},
 	 * but allows rendering only a part of the "normal" image.
 	 */
 	static final void applyProjectionMatricesForPart(PMVMatrix pmvMatrix, Projection projection,
@@ -536,7 +534,7 @@ public class JOGLTargetShader extends AbstractJOGLTarget implements JOGLTarget {
 		
 	}
 	
-//	public void drawPrimitive(GL3 gl, int glPrimitiveType,
+//	public void drawPrimitive(GL4 gl, int glPrimitiveType,
 //			List<VectorXYZ> vertices, List<VectorXYZ> normals,
 //			List<List<VectorXZ>> texCoordLists) {
 //		assert vertices.size() == normals.size();

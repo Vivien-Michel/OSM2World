@@ -1,10 +1,10 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_DEPTH_BUFFER_BIT;
-import static javax.media.opengl.GL.GL_DEPTH_TEST;
+import static com.jogamp.opengl.GL.GL_DEPTH_BUFFER_BIT;
+import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL4;
 
 import org.osm2world.core.target.common.material.Material;
 import org.osm2world.core.target.common.material.Material.AmbientOcclusion;
@@ -19,7 +19,7 @@ public class SSAOShader extends DepthBufferShader {
 	private int width;
 	private int height;
 	
-	public SSAOShader(GL3 gl) {
+	public SSAOShader(GL4 gl) {
 		super(gl);
 		initialize();
 	}
@@ -42,12 +42,12 @@ public class SSAOShader extends DepthBufferShader {
 
 		gl.glTexImage2D(GL.GL_TEXTURE_2D,          // target texture type
 		        0,                                  // mipmap LOD level
-		        GL3.GL_DEPTH_COMPONENT,         // internal pixel format
+		        GL4.GL_DEPTH_COMPONENT,         // internal pixel format
 		                                            //GL_DEPTH_COMPONENT
 		        width,                     // width of generated image
 		        height,                    // height of generated image
 		        0,                          // border of image
-		        GL3.GL_DEPTH_COMPONENT,     // external pixel format 
+		        GL4.GL_DEPTH_COMPONENT,     // external pixel format 
 		        GL.GL_UNSIGNED_BYTE,        // datatype for each value
 		        null);  // buffer to store the texture in memory
 
@@ -63,14 +63,14 @@ public class SSAOShader extends DepthBufferShader {
 		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_CLAMP_TO_EDGE);
 		gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_CLAMP_TO_EDGE);
 		//float [] border = {1.0f, 0.0f, 0.0f, 0.0f};
-		//gl.glTexParameterfv(GL.GL_TEXTURE_2D, GL3.GL_TEXTURE_BORDER_COLOR, border, 0);
+		//gl.glTexParameterfv(GL.GL_TEXTURE_2D, GL4.GL_TEXTURE_BORDER_COLOR, border, 0);
 		
 		/* special for depth textures: do not retrieve the texture values, but the result of a comparison.
 		 * compare the third value (r) of the texture coordinate against the depth value stored at the texture coordinate (s,t)
 		 * result will be 1.0 if r is less than the texture value (which means the fragment is nearer) and 0.0 otherwise
 		 */
-		//gl.glTexParameteri(GL.GL_TEXTURE_2D, GL3.GL_TEXTURE_COMPARE_MODE, GL3.GL_COMPARE_REF_TO_TEXTURE);
-		//gl.glTexParameteri(GL.GL_TEXTURE_2D, GL3.GL_TEXTURE_COMPARE_FUNC, GL.GL_LESS);
+		//gl.glTexParameteri(GL.GL_TEXTURE_2D, GL4.GL_TEXTURE_COMPARE_MODE, GL4.GL_COMPARE_REF_TO_TEXTURE);
+		//gl.glTexParameteri(GL.GL_TEXTURE_2D, GL4.GL_TEXTURE_COMPARE_FUNC, GL.GL_LESS);
 
 		gl.glActiveTexture(GL.GL_TEXTURE1);
 		gl.glBindTexture(GL.GL_TEXTURE_2D, depthBufferHandle);
@@ -124,8 +124,8 @@ public class SSAOShader extends DepthBufferShader {
 
 		//Disable color buffer
 		//http://stackoverflow.com/questions/12546368/render-the-depth-buffer-into-a-texture-using-a-frame-buffer
-		//gl.glDrawBuffer(GL2.GL_NONE);
-		//gl.glReadBuffer(GL2.GL_NONE);
+		//gl.glDrawBuffer(GL4bc.GL_NONE);
+		//gl.glReadBuffer(GL4bc.GL_NONE);
 
 		//Set pixels ((width*2)* (height*2))
 		//It has to have twice the size of shadowmap size
@@ -156,12 +156,12 @@ public class SSAOShader extends DepthBufferShader {
 	
 			gl.glTexImage2D(GL.GL_TEXTURE_2D,          // target texture type
 			        0,                                  // mipmap LOD level
-			        GL3.GL_DEPTH_COMPONENT,         // internal pixel format
+			        GL4.GL_DEPTH_COMPONENT,         // internal pixel format
 			                                            //GL_DEPTH_COMPONENT
 			        width,                     // width of generated image
 			        height,                    // height of generated image
 			        0,                          // border of image
-			        GL3.GL_DEPTH_COMPONENT,     // external pixel format 
+			        GL4.GL_DEPTH_COMPONENT,     // external pixel format 
 			        GL.GL_UNSIGNED_BYTE,        // datatype for each value
 			        null);  // buffer to store the texture in memory
 		}

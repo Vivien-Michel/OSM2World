@@ -1,7 +1,7 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_FLOAT;
-import static javax.media.opengl.GL2GL3.GL_DOUBLE;
+import static com.jogamp.opengl.GL.GL_FLOAT;
+import static com.jogamp.opengl.GL4.GL_DOUBLE;
 
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL4;
 
 import org.osm2world.core.math.VectorXYZW;
 import org.osm2world.core.target.common.Primitive;
@@ -28,7 +28,7 @@ import com.jogamp.common.nio.Buffers;
  */
 public class JOGLRendererVBOShadowVolume  {
 	
-	protected GL3 gl;
+	protected GL4 gl;
 	protected AbstractPrimitiveShader shader;
 	protected VectorXYZW lightPos;
 
@@ -39,7 +39,7 @@ public class JOGLRendererVBOShadowVolume  {
 	
 	private final class VBODataDouble extends VBODataShadowVolume<DoubleBuffer> {
 
-		public VBODataDouble(GL3 gl, Collection<Primitive> primitives, VectorXYZW lightPos) {
+		public VBODataDouble(GL4 gl, Collection<Primitive> primitives, VectorXYZW lightPos) {
 			super(gl, primitives, lightPos);
 		}
 		
@@ -70,7 +70,7 @@ public class JOGLRendererVBOShadowVolume  {
 	
 	private final class VBODataFloat extends VBODataShadowVolume<FloatBuffer> {
 
-		public VBODataFloat(GL3 gl, Collection<Primitive> primitives, VectorXYZW lightPos) {
+		public VBODataFloat(GL4 gl, Collection<Primitive> primitives, VectorXYZW lightPos) {
 			super(gl, primitives, lightPos);
 		}
 		
@@ -104,7 +104,7 @@ public class JOGLRendererVBOShadowVolume  {
 	 * @param primitiveBuffer the primitives to create the shadow volumes for
 	 * @param lightPos the position of the light source to create the shadow volumes for. If ligthPose.w == 0, the light is directional.
 	 */
-	JOGLRendererVBOShadowVolume(GL3 gl, PrimitiveBuffer primitiveBuffer, VectorXYZW lightPos) {
+	JOGLRendererVBOShadowVolume(GL4 gl, PrimitiveBuffer primitiveBuffer, VectorXYZW lightPos) {
 		
 		this.gl = gl;
 		this.lightPos = lightPos;

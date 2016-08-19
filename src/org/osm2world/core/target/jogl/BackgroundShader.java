@@ -2,8 +2,7 @@ package org.osm2world.core.target.jogl;
 
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL3;
-
+import com.jogamp.opengl.GL4;
 import com.jogamp.opengl.math.FloatUtil;
 import com.jogamp.opengl.util.PMVMatrix;
 
@@ -17,8 +16,8 @@ public class BackgroundShader extends AbstractShader {
 	private int vertexTexCoord;
 	private int textureID;
 	
-	public BackgroundShader(GL3 gl) {
-		super(gl, "/shaders/background");
+	public BackgroundShader(GL4 gl) {
+		super(gl, "resources\\shaders\\background");
 		
 		// get indices of named attributes
 		vertexPositionID = gl.glGetAttribLocation(shaderProgram, "VertexPosition");
@@ -37,7 +36,8 @@ public class BackgroundShader extends AbstractShader {
 	 */
 	public void setPMVMatrix(PMVMatrix pmvMatrix) {
 		FloatBuffer pmvMat = FloatBuffer.allocate(16);
-		FloatUtil.multMatrixf(pmvMatrix.glGetPMatrixf(), pmvMatrix.glGetMvMatrixf(), pmvMat);
+		pmvMatrix.multMvPMatrixf(pmvMat.array(), 0);
+		FloatUtil.multMatrix(pmvMatrix.glGetPMatrixf(), pmvMatrix.glGetMvMatrixf(), pmvMat.array());
 		gl.glUniformMatrix4fv(this.getModelViewProjectionMatrixID(), 1, false, pmvMat);
 	}
 	

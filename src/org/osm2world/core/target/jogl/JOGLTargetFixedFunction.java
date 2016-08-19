@@ -1,55 +1,55 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_BACK;
-import static javax.media.opengl.GL.GL_CCW;
-import static javax.media.opengl.GL.GL_CULL_FACE;
-import static javax.media.opengl.GL.GL_DEPTH_TEST;
-import static javax.media.opengl.GL.GL_FRONT;
-import static javax.media.opengl.GL.GL_FRONT_AND_BACK;
-import static javax.media.opengl.GL.GL_GREATER;
-import static javax.media.opengl.GL.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT;
-import static javax.media.opengl.GL.GL_REPEAT;
-import static javax.media.opengl.GL.GL_REPLACE;
-import static javax.media.opengl.GL.GL_SRC_ALPHA;
-import static javax.media.opengl.GL.GL_SRC_COLOR;
-import static javax.media.opengl.GL.GL_TEXTURE;
-import static javax.media.opengl.GL.GL_TEXTURE0;
-import static javax.media.opengl.GL.GL_TEXTURE1;
-import static javax.media.opengl.GL.GL_TEXTURE2;
-import static javax.media.opengl.GL.GL_TEXTURE3;
-import static javax.media.opengl.GL.GL_TEXTURE_2D;
-import static javax.media.opengl.GL.GL_TEXTURE_MAX_ANISOTROPY_EXT;
-import static javax.media.opengl.GL.GL_TEXTURE_WRAP_S;
-import static javax.media.opengl.GL.GL_TEXTURE_WRAP_T;
-import static javax.media.opengl.GL2.GL_CLAMP;
-import static javax.media.opengl.GL2.GL_SOURCE0_RGB;
-import static javax.media.opengl.GL2.GL_SOURCE1_RGB;
-import static javax.media.opengl.GL2.GL_SOURCE2_RGB;
-import static javax.media.opengl.GL2ES1.GL_ALPHA_TEST;
-import static javax.media.opengl.GL2ES1.GL_COMBINE;
-import static javax.media.opengl.GL2ES1.GL_COMBINE_RGB;
-import static javax.media.opengl.GL2ES1.GL_INTERPOLATE;
-import static javax.media.opengl.GL2ES1.GL_LIGHT_MODEL_AMBIENT;
-import static javax.media.opengl.GL2ES1.GL_MODULATE;
-import static javax.media.opengl.GL2ES1.GL_OPERAND0_RGB;
-import static javax.media.opengl.GL2ES1.GL_OPERAND1_RGB;
-import static javax.media.opengl.GL2ES1.GL_OPERAND2_RGB;
-import static javax.media.opengl.GL2ES1.GL_PREVIOUS;
-import static javax.media.opengl.GL2ES1.GL_TEXTURE_ENV;
-import static javax.media.opengl.GL2ES1.GL_TEXTURE_ENV_MODE;
-import static javax.media.opengl.GL2GL3.GL_CLAMP_TO_BORDER;
-import static javax.media.opengl.GL2GL3.GL_FILL;
-import static javax.media.opengl.GL2GL3.GL_LINE;
-import static javax.media.opengl.GL2GL3.GL_QUADS;
-import static javax.media.opengl.GL2GL3.GL_TEXTURE_BORDER_COLOR;
-import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_AMBIENT;
-import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_DIFFUSE;
-import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_LIGHT0;
-import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_LIGHTING;
-import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_POSITION;
-import static javax.media.opengl.fixedfunc.GLLightingFunc.GL_SPECULAR;
-import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_MODELVIEW;
-import static javax.media.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
+import static com.jogamp.opengl.GL.GL_BACK;
+import static com.jogamp.opengl.GL.GL_CCW;
+import static com.jogamp.opengl.GL.GL_CULL_FACE;
+import static com.jogamp.opengl.GL.GL_DEPTH_TEST;
+import static com.jogamp.opengl.GL.GL_FRONT;
+import static com.jogamp.opengl.GL.GL_FRONT_AND_BACK;
+import static com.jogamp.opengl.GL.GL_GREATER;
+import static com.jogamp.opengl.GL.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT;
+import static com.jogamp.opengl.GL.GL_REPEAT;
+import static com.jogamp.opengl.GL.GL_REPLACE;
+import static com.jogamp.opengl.GL.GL_SRC_ALPHA;
+import static com.jogamp.opengl.GL.GL_SRC_COLOR;
+import static com.jogamp.opengl.GL.GL_TEXTURE;
+import static com.jogamp.opengl.GL.GL_TEXTURE0;
+import static com.jogamp.opengl.GL.GL_TEXTURE1;
+import static com.jogamp.opengl.GL.GL_TEXTURE2;
+import static com.jogamp.opengl.GL.GL_TEXTURE3;
+import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
+import static com.jogamp.opengl.GL.GL_TEXTURE_MAX_ANISOTROPY_EXT;
+import static com.jogamp.opengl.GL.GL_TEXTURE_WRAP_S;
+import static com.jogamp.opengl.GL.GL_TEXTURE_WRAP_T;
+import static com.jogamp.opengl.GL4bc.GL_CLAMP;
+import static com.jogamp.opengl.GL4bc.GL_SOURCE0_RGB;
+import static com.jogamp.opengl.GL4bc.GL_SOURCE1_RGB;
+import static com.jogamp.opengl.GL4bc.GL_SOURCE2_RGB;
+import static com.jogamp.opengl.GL2ES1.GL_ALPHA_TEST;
+import static com.jogamp.opengl.GL2ES1.GL_COMBINE;
+import static com.jogamp.opengl.GL2ES1.GL_COMBINE_RGB;
+import static com.jogamp.opengl.GL2ES1.GL_INTERPOLATE;
+import static com.jogamp.opengl.GL2ES1.GL_LIGHT_MODEL_AMBIENT;
+import static com.jogamp.opengl.GL2ES1.GL_MODULATE;
+import static com.jogamp.opengl.GL2ES1.GL_OPERAND0_RGB;
+import static com.jogamp.opengl.GL2ES1.GL_OPERAND1_RGB;
+import static com.jogamp.opengl.GL2ES1.GL_OPERAND2_RGB;
+import static com.jogamp.opengl.GL2ES1.GL_PREVIOUS;
+import static com.jogamp.opengl.GL2ES1.GL_TEXTURE_ENV;
+import static com.jogamp.opengl.GL2ES1.GL_TEXTURE_ENV_MODE;
+import static com.jogamp.opengl.GL4.GL_CLAMP_TO_BORDER;
+import static com.jogamp.opengl.GL4.GL_FILL;
+import static com.jogamp.opengl.GL4.GL_LINE;
+import static com.jogamp.opengl.GL4.GL_QUADS;
+import static com.jogamp.opengl.GL4.GL_TEXTURE_BORDER_COLOR;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_AMBIENT;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_DIFFUSE;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_LIGHT0;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_LIGHTING;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_POSITION;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_SPECULAR;
+import static com.jogamp.opengl.fixedfunc.GLMatrixFunc.GL_MODELVIEW;
+import static com.jogamp.opengl.fixedfunc.GLMatrixFunc.GL_PROJECTION;
 import static org.osm2world.core.target.common.material.Material.multiplyColor;
 import static org.osm2world.core.target.common.material.Material.Transparency.BINARY;
 import static org.osm2world.core.target.common.material.Material.Transparency.TRUE;
@@ -58,9 +58,9 @@ import java.awt.Color;
 import java.io.File;
 import java.util.List;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL2;
-import javax.media.opengl.glu.GLU;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL4bc;
+import com.jogamp.opengl.glu.GLU;
 
 import org.apache.commons.configuration.BaseConfiguration;
 import org.apache.commons.configuration.Configuration;
@@ -87,12 +87,12 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 	/** globally controls anisotropic filtering for all textures */
 	private static final boolean ANISOTROPIC_FILTERING = true;
 	
-	private final GL2 gl;
+	private final GL4bc gl;
 	
 	private Configuration config = new BaseConfiguration();
 	
 	/**
-	 * creates a new JOGLTarget for a given {@link GL2} interface. It is
+	 * creates a new JOGLTarget for a given {@link GL4bc} interface. It is
 	 * possible to have multiple targets that render to the same gl object.
 	 * 
 	 * @param renderingParameters  global parameters for rendering;
@@ -100,7 +100,7 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 	 * @param globalLightingParameters  global parameters for lighting;
 	 *   see {@link #setGlobalLightingParameters(GlobalLightingParameters)}
 	 */
-	public JOGLTargetFixedFunction(GL2 gl, JOGLRenderingParameters renderingParameters,
+	public JOGLTargetFixedFunction(GL4bc gl, JOGLRenderingParameters renderingParameters,
 			GlobalLightingParameters globalLightingParameters) {
 		
 		super(gl, renderingParameters, globalLightingParameters);
@@ -110,7 +110,7 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 		
 	}
 
-	public static void drawPrimitive(GL2 gl, int glPrimitiveType,
+	public static void drawPrimitive(GL4bc gl, int glPrimitiveType,
 			List<VectorXYZ> vertices, List<VectorXYZ> normals,
 			List<List<VectorXZ>> texCoordLists) {
 		
@@ -209,7 +209,7 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 		
 	}
 	
-	static final void applyCameraMatrices(GL2 gl, Camera camera) {
+	static final void applyCameraMatrices(GL4bc gl, Camera camera) {
 		
     	gl.glLoadIdentity();
 		
@@ -223,15 +223,15 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 		
 	}
 	
-	static final void applyProjectionMatrices(GL2 gl, Projection projection) {
+	static final void applyProjectionMatrices(GL4bc gl, Projection projection) {
 		applyProjectionMatricesForPart(gl, projection, 0, 1, 0, 1);
 	}
 
 	/**
-	 * similar to {@link #applyProjectionMatrices(GL2, Projection)},
+	 * similar to {@link #applyProjectionMatrices(GL4bc, Projection)},
 	 * but allows rendering only a part of the "normal" image.
 	 */
-	static final void applyProjectionMatricesForPart(GL2 gl, Projection projection,
+	static final void applyProjectionMatricesForPart(GL4bc gl, Projection projection,
 			double xStart, double xEnd, double yStart, double yEnd) {
 		
 		if ((xStart != 0 || xEnd != 1 || yStart != 0 || yEnd != 1)
@@ -269,7 +269,7 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 		
 	}
 	
-	static final void applyRenderingParameters(GL2 gl,
+	static final void applyRenderingParameters(GL4bc gl,
 			JOGLRenderingParameters parameters) {
 		
 		/* backface culling */
@@ -300,7 +300,7 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 				
 	}
 	
-	static final void applyLightingParameters(GL2 gl,
+	static final void applyLightingParameters(GL4bc gl,
 			GlobalLightingParameters lighting, boolean orthographicProjection) {
 		
 		if (lighting == null) {
@@ -321,8 +321,8 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 					getFloatBuffer(lighting.lightColorSpecular));
 			
 			// make specular lighting computation more realistic
-			gl.glLightModeli(GL2.GL_LIGHT_MODEL_LOCAL_VIEWER, orthographicProjection ? GL.GL_FALSE : GL.GL_TRUE);
-			gl.glLightModeli(GL2.GL_LIGHT_MODEL_COLOR_CONTROL, GL2.GL_SEPARATE_SPECULAR_COLOR);
+			gl.glLightModeli(GL4bc.GL_LIGHT_MODEL_LOCAL_VIEWER, orthographicProjection ? GL.GL_FALSE : GL.GL_TRUE);
+			gl.glLightModeli(GL4bc.GL_LIGHT_MODEL_COLOR_CONTROL, GL4bc.GL_SEPARATE_SPECULAR_COLOR);
 			
 			gl.glLightfv(GL_LIGHT0, GL_POSITION, new float[] {
 						(float)lighting.lightFromDirection.x,
@@ -337,7 +337,7 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 		
 	}
 	
-	static final void setMaterial(GL2 gl, Material material,
+	static final void setMaterial(GL4bc gl, Material material,
 			JOGLTextureManager textureManager) {
 		
 		int numTexLayers = 0;
@@ -380,9 +380,9 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 		}
 		
 		// specular lighting
-		gl.glMaterialfv(GL.GL_FRONT, GL2.GL_SPECULAR, getFloatBuffer(
+		gl.glMaterialfv(GL.GL_FRONT, GL4bc.GL_SPECULAR, getFloatBuffer(
 				multiplyColor(Color.WHITE, material.getSpecularFactor())));
-		gl.glMateriali(GL.GL_FRONT, GL2.GL_SHININESS, material.getShininess());
+		gl.glMateriali(GL.GL_FRONT, GL4bc.GL_SHININESS, material.getShininess());
 		
 		/* set textures and associated parameters */
 		
@@ -497,19 +497,19 @@ public final class JOGLTargetFixedFunction extends AbstractJOGLTarget implements
 		        	 * Arg1 = Ad
 		        	 * Arg2 = As
 		        	 */
-		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL2.GL_COMBINE_ALPHA, GL_INTERPOLATE ); 
+		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL4bc.GL_COMBINE_ALPHA, GL_INTERPOLATE ); 
 		        	
-		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL2.GL_SOURCE0_ALPHA, GL2.GL_CONSTANT );
-		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL2.GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
+		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL4bc.GL_SOURCE0_ALPHA, GL4bc.GL_CONSTANT );
+		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL4bc.GL_OPERAND0_ALPHA, GL_SRC_ALPHA );
 		        	
 		        	float[] mycolor = {0.0f, 0.0f, 0.0f, 1.0f}; //RGB doesn't matter since its not used
-		        	gl.glTexEnvfv(GL_TEXTURE_ENV, GL2.GL_TEXTURE_ENV_COLOR, mycolor, 0);
+		        	gl.glTexEnvfv(GL_TEXTURE_ENV, GL4bc.GL_TEXTURE_ENV_COLOR, mycolor, 0);
 
-		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL2.GL_SOURCE1_ALPHA, GL_PREVIOUS );
-		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL2.GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
+		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL4bc.GL_SOURCE1_ALPHA, GL_PREVIOUS );
+		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL4bc.GL_OPERAND1_ALPHA, GL_SRC_ALPHA );
 
-		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL2.GL_SOURCE2_ALPHA, GL_TEXTURE );
-		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL2.GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
+		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL4bc.GL_SOURCE2_ALPHA, GL_TEXTURE );
+		        	gl.glTexEnvi( GL_TEXTURE_ENV, GL4bc.GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
 		        }
 		        
 			}

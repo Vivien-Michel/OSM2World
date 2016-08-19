@@ -2,15 +2,15 @@ package org.osm2world.core.target.jogl;
 
 import java.nio.IntBuffer;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL4;
 
 /**
  * Simple base class for a shader program. Manages vertex and fragment shaders, links and validates them.
  */
 public abstract class AbstractShader {
 	
-	protected GL3 gl;
+	protected GL4 gl;
 	protected int vertexShader;
 	protected int fragmentShader;
 	protected int shaderProgram;
@@ -21,7 +21,7 @@ public abstract class AbstractShader {
 	 * {@link #validateShader()} needs to be called manually.
 	 * @param name basename of the shader to load
 	 */
-	public AbstractShader(GL3 gl, String name) {
+	public AbstractShader(GL4 gl, String name) {
 		this.gl = gl;
 		shaderProgram = gl.glCreateProgram();
 
@@ -44,7 +44,7 @@ public abstract class AbstractShader {
 		gl.glLinkProgram(shaderProgram);
 		// validate linking
 		IntBuffer linkStatus = IntBuffer.allocate(1);
-		gl.glGetProgramiv(shaderProgram, GL3.GL_LINK_STATUS, linkStatus);
+		gl.glGetProgramiv(shaderProgram, GL4.GL_LINK_STATUS, linkStatus);
 		if (linkStatus.get() == GL.GL_FALSE) {
 			ShaderManager.printProgramInfoLog(gl, shaderProgram);
 			throw new RuntimeException("could not link shader");
@@ -60,7 +60,7 @@ public abstract class AbstractShader {
 		gl.glValidateProgram(shaderProgram);
 		// perform general validation that the program is usable
 		IntBuffer validateStatus = IntBuffer.allocate(1);
-		gl.glGetProgramiv(shaderProgram, GL3.GL_VALIDATE_STATUS, validateStatus);
+		gl.glGetProgramiv(shaderProgram, GL4.GL_VALIDATE_STATUS, validateStatus);
 		if (validateStatus.get() == GL.GL_FALSE) {
 			ShaderManager.printProgramInfoLog(gl, shaderProgram);
 			throw new RuntimeException("could not validate shader");

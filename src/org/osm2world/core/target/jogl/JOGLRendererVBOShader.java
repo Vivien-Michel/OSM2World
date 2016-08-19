@@ -1,15 +1,14 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_FLOAT;
-import static javax.media.opengl.GL2GL3.GL_DOUBLE;
+import static com.jogamp.opengl.GL.GL_FLOAT;
+import static com.jogamp.opengl.GL4.GL_DOUBLE;
 
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.media.opengl.GL3;
-
+import com.jogamp.opengl.GL4;
 import org.osm2world.core.math.AxisAlignedBoundingBoxXYZ;
 import org.osm2world.core.math.AxisAlignedBoundingBoxXZ;
 import org.osm2world.core.math.VectorXYZ;
@@ -31,13 +30,13 @@ import com.jogamp.common.nio.Buffers;
  */
 public class JOGLRendererVBOShader extends JOGLRendererVBO {
 	
-	protected GL3 gl;
+	protected GL4 gl;
 	protected AbstractPrimitiveShader shader;
 	protected AxisAlignedBoundingBoxXYZ boundingBox = null;
 	
 	private final class VBODataDouble extends VBODataShader<DoubleBuffer> {
 
-		public VBODataDouble(GL3 gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
+		public VBODataDouble(GL4 gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
 			super(gl, textureManager, material, primitives);
 		}
 		
@@ -81,7 +80,7 @@ public class JOGLRendererVBOShader extends JOGLRendererVBO {
 	
 	private final class VBODataFloat extends VBODataShader<FloatBuffer> {
 
-		public VBODataFloat(GL3 gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
+		public VBODataFloat(GL4 gl, JOGLTextureManager textureManager, Material material, Collection<Primitive> primitives) {
 			super(gl, textureManager, material, primitives);
 		}
 		
@@ -128,7 +127,7 @@ public class JOGLRendererVBOShader extends JOGLRendererVBO {
 	 * @param primitiveBuffer the primitives to create the VBOs for
 	 * @param xzBoundary the boundary of the OSM file. Used to tighten the bounding box to only primitives within these bounds.
 	 */
-	JOGLRendererVBOShader(GL3 gl, JOGLTextureManager textureManager,
+	JOGLRendererVBOShader(GL4 gl, JOGLTextureManager textureManager,
 			PrimitiveBuffer primitiveBuffer, AxisAlignedBoundingBoxXZ xzBoundary) {
 		
 		super(textureManager);
@@ -229,7 +228,7 @@ public class JOGLRendererVBOShader extends JOGLRendererVBO {
 	}
 	
 	/**
-	 * Get the bounding box around all relevant primitives computed at {@link #JOGLRendererVBOShader(GL3, JOGLTextureManager, PrimitiveBuffer, AxisAlignedBoundingBoxXZ)}
+	 * Get the bounding box around all relevant primitives computed at {@link #JOGLRendererVBOShader(GL4, JOGLTextureManager, PrimitiveBuffer, AxisAlignedBoundingBoxXZ)}
 	 */
 	public AxisAlignedBoundingBoxXYZ getBoundingBox() {
 		return boundingBox;

@@ -30,8 +30,7 @@ public class OSM2World {
 
 	public static void main(String[] unparsedArgs) {
 		
-		/* assume --gui if no parameters are given */
-		
+		/* assume --gui if no parameters are given */		
 		if (unparsedArgs.length == 0) {
 		 
 			System.out.println("No parameters, running graphical interface.\n"
@@ -200,6 +199,10 @@ public class OSM2World {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			break;
+		case PARAMFILE:
+			break;
+		default:
 			break;
 			
 		}

@@ -10,8 +10,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.media.opengl.GLCapabilities;
-import javax.media.opengl.GLProfile;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLProfile;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -257,7 +257,6 @@ public class ViewerFrame extends JFrame {
 			
 			ButtonGroup interpolatorGroup = new ButtonGroup();
 			
-			@SuppressWarnings("unchecked")
 			List<Class<? extends TerrainInterpolator>> interpolatorClasses = asList(
 					ZeroInterpolator.class,
 					LinearInterpolator.class,
@@ -281,7 +280,6 @@ public class ViewerFrame extends JFrame {
 			
 			ButtonGroup enforcerGroup = new ButtonGroup();
 			
-			@SuppressWarnings("unchecked")
 			List<Class<? extends EleConstraintEnforcer>> enforcerClasses = asList(
 					NoneEleConstraintEnforcer.class,
 					SimpleEleConstraintEnforcer.class,
@@ -343,7 +341,7 @@ public class ViewerFrame extends JFrame {
 		// select OpengGL implementation. TODO: autodetection
 		GLProfile profile;
 		if ("shader".equals(config.getString("joglImplementation"))) {
-			profile = GLProfile.get(GLProfile.GL3);
+			profile = GLProfile.get(GLProfile.GL4bc);
 		} else {
 			profile = GLProfile.get(GLProfile.GL2);
 		}

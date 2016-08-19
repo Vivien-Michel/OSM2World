@@ -1,7 +1,7 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_FLOAT;
-import static javax.media.opengl.GL2GL3.GL_DOUBLE;
+import static com.jogamp.opengl.GL.GL_FLOAT;
+import static com.jogamp.opengl.GL4.GL_DOUBLE;
 
 import java.awt.Color;
 import java.nio.DoubleBuffer;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.media.opengl.GL3;
+import com.jogamp.opengl.GL4;
 
 import org.osm2world.core.math.VectorXYZ;
 
@@ -27,13 +27,13 @@ public class JOGLRendererVBONonAreaShader {
 	
 	protected static final boolean DOUBLE_PRECISION_RENDERING = false;
 	
-	protected GL3 gl;
+	protected GL4 gl;
 	private NonAreaShader shader;
 	protected List<VBODataNonAreaShader<?>> vbos = new ArrayList<VBODataNonAreaShader<?>>();
 	
 	private final class VBODataDouble extends VBODataNonAreaShader<DoubleBuffer> {
 
-		public VBODataDouble(GL3 gl, NonAreaPrimitive primitive) {
+		public VBODataDouble(GL4 gl, NonAreaPrimitive primitive) {
 			super(gl, shader, primitive);
 		}
 		
@@ -71,7 +71,7 @@ public class JOGLRendererVBONonAreaShader {
 	
 	private final class VBODataFloat extends VBODataNonAreaShader<FloatBuffer> {
 
-		public VBODataFloat(GL3 gl, NonAreaPrimitive primitive) {
+		public VBODataFloat(GL4 gl, NonAreaPrimitive primitive) {
 			super(gl, shader, primitive);
 		}
 		
@@ -112,7 +112,7 @@ public class JOGLRendererVBONonAreaShader {
 	 * @param shader the shader used for rendering
 	 * @param primitives the primitives to render
 	 */
-	public JOGLRendererVBONonAreaShader(GL3 gl, NonAreaShader shader, Collection<NonAreaPrimitive> primitives) {
+	public JOGLRendererVBONonAreaShader(GL4 gl, NonAreaShader shader, Collection<NonAreaPrimitive> primitives) {
 		this.gl = gl;
 		this.shader = shader;
 		for (NonAreaPrimitive nonAreaPrimitive : primitives) {

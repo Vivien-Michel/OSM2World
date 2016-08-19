@@ -4,7 +4,7 @@ import static java.util.Arrays.asList;
 
 import java.awt.Color;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.apache.commons.configuration.Configuration;
 import org.osm2world.core.ConversionFacade.Results;
@@ -97,9 +97,9 @@ public abstract class DebugView {
 					
 			if (target == null) {
 				if ("shader".equals(config.getString("joglImplementation"))) {
-					target = new JOGLTargetShader(gl.getGL3(), new JOGLRenderingParameters(), null);
+					target = new JOGLTargetShader(gl.getGL4(), new JOGLRenderingParameters(), null);
 				} else {
-					target = new JOGLTargetFixedFunction(gl.getGL2(), new JOGLRenderingParameters(), null);
+					target = new JOGLTargetFixedFunction(gl.getGL4bc(), new JOGLRenderingParameters(), null);
 				}
 				target.setConfiguration(config);
 			} else if (targetNeedsReset){

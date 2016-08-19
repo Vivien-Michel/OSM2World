@@ -72,14 +72,14 @@ public class ClearingDebugView extends DebugView {
 //				target.drawLineStrip(color, 1, lowerClearingPoints);
 //
 //				/* TODO replace stipple effect
-//				gl.glEnable(GL2.GL_POLYGON_STIPPLE);
+//				gl.glEnable(GL4bc.GL_POLYGON_STIPPLE);
 //				gl.glPolygonStipple(STIPPLE_PATTERN, 0);
 //				*/
 //				target.drawConvexPolygon(
 //						new ImmutableMaterial(Lighting.FLAT, color),
 //						asList(clearingPolygonPoints), null);
 //				/*
-//				gl.glDisable(GL2.GL_POLYGON_STIPPLE);
+//				gl.glDisable(GL4bc.GL_POLYGON_STIPPLE);
 //				*/
 //
 //			}

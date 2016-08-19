@@ -1,19 +1,18 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_REPEAT;
-import static javax.media.opengl.GL.GL_TEXTURE_2D;
-import static javax.media.opengl.GL.GL_TEXTURE_WRAP_S;
-import static javax.media.opengl.GL.GL_TEXTURE_WRAP_T;
-import static javax.media.opengl.GL2GL3.GL_CLAMP_TO_BORDER;
-import static javax.media.opengl.GL2GL3.GL_TEXTURE_BORDER_COLOR;
+import static com.jogamp.opengl.GL.GL_REPEAT;
+import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
+import static com.jogamp.opengl.GL.GL_TEXTURE_WRAP_S;
+import static com.jogamp.opengl.GL.GL_TEXTURE_WRAP_T;
+import static com.jogamp.opengl.GL4.GL_CLAMP_TO_BORDER;
+import static com.jogamp.opengl.GL4.GL_TEXTURE_BORDER_COLOR;
 import static org.osm2world.core.target.jogl.AbstractJOGLTarget.getFloatBuffer;
 
 import java.awt.Color;
 import java.nio.FloatBuffer;
 
-import javax.media.opengl.GL;
-import javax.media.opengl.GL3;
-
+import com.jogamp.opengl.GL;
+import com.jogamp.opengl.GL4;
 import org.osm2world.core.target.common.TextureData;
 import org.osm2world.core.target.common.TextureData.Wrap;
 import org.osm2world.core.target.common.material.Material;
@@ -34,8 +33,8 @@ public class DepthBufferShader extends AbstractPrimitiveShader {
 	private int vertexPositionID;
 	private int[] vertexTexCoordID = new int[DefaultShader.MAX_TEXTURE_LAYERS];
 	
-	public DepthBufferShader(GL3 gl) {
-		super(gl, "/shaders/shadowmap");
+	public DepthBufferShader(GL4 gl) {
+		super(gl, "resources\\shaders\\shadowmap");
 		
 		// get indices of named attributes
 		vertexPositionID = gl.glGetAttribLocation(shaderProgram, "VertexPosition");
@@ -54,7 +53,7 @@ public class DepthBufferShader extends AbstractPrimitiveShader {
 	 */
 	public void setPMVMatrix(PMVMatrix pmvMatrix) {
 		FloatBuffer pmvMat = FloatBuffer.allocate(16);
-		FloatUtil.multMatrixf(pmvMatrix.glGetPMatrixf(), pmvMatrix.glGetMvMatrixf(), pmvMat);
+		FloatUtil.multMatrix(pmvMatrix.glGetPMatrixf(), pmvMatrix.glGetMvMatrixf(), pmvMat.array());
 		gl.glUniformMatrix4fv(this.getModelViewProjectionMatrixID(), 1, false, pmvMat);
 	}
 	

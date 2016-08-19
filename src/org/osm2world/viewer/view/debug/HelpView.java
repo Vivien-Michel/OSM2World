@@ -2,7 +2,7 @@ package org.osm2world.viewer.view.debug;
 
 import java.awt.Color;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.osm2world.core.GlobalValues;
 import org.osm2world.core.target.common.rendering.Camera;
@@ -38,7 +38,8 @@ public class HelpView extends DebugView {
 		if (!canBeUsed()) { return; }
 		if (textRenderer == null) {
 			if ("shader".equals(config.getString("joglImplementation"))) {
-				textRenderer = new TextRendererShader(gl.getGL2ES2());
+				//textRenderer = new TextRendererShader(gl.getGL().getGL4());
+				textRenderer = new TextRendererFixedFunction();
 			} else {
 				textRenderer = new TextRendererFixedFunction();
 			}

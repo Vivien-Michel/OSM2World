@@ -2,7 +2,7 @@ package org.osm2world.core.target.jogl;
 
 import static java.lang.Math.PI;
 import static java.lang.Math.abs;
-import static javax.media.opengl.GL2.GL_COMPILE;
+import static com.jogamp.opengl.GL4bc.GL_COMPILE;
 import static org.osm2world.core.target.common.rendering.OrthoTilesUtil.CardinalDirection.closestCardinal;
 import static org.osm2world.core.target.jogl.JOGLTargetFixedFunction.drawPrimitive;
 
@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.media.opengl.GL2;
+import com.jogamp.opengl.GL4bc;
 
 import org.osm2world.core.math.VectorXYZ;
 import org.osm2world.core.target.common.Primitive;
@@ -31,7 +31,7 @@ import org.osm2world.core.target.common.rendering.Projection;
  */
 class JOGLRendererDisplayList extends JOGLRenderer {
 	
-	protected GL2 gl;
+	protected GL4bc gl;
 	
 	/** pointer to the display list with static, non-transparent geometry */
 	private Integer displayListPointer;
@@ -58,7 +58,7 @@ class JOGLRendererDisplayList extends JOGLRenderer {
 		
 	}
 	
-	public JOGLRendererDisplayList(GL2 gl, JOGLTextureManager textureManager,
+	public JOGLRendererDisplayList(GL4bc gl, JOGLTextureManager textureManager,
 			PrimitiveBuffer primitiveBuffer) {
 		
 		super(textureManager);

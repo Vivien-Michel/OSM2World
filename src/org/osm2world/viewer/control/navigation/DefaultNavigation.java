@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.im.InputContext;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ public class DefaultNavigation extends MouseAdapter implements KeyListener, Mous
 
 	private final static double ANGLE_INCREMENT = Math.PI/200;
 	private final static double MOVEMENT_INCREMENT = 2.0;
+	private String localeContext;
 	
 	private final RenderOptions renderOptions;
 	private final ViewerFrame viewerFrame;
@@ -35,6 +37,9 @@ public class DefaultNavigation extends MouseAdapter implements KeyListener, Mous
 		
 		this.viewerFrame = viewerFrame;
 		this.renderOptions = renderOptions;
+		
+		InputContext context = InputContext.getInstance();
+		localeContext= context.getLocale().toString();
 		
 		timer = new Timer(20, KEYBOARD_TASK);
 	}
@@ -160,52 +165,101 @@ public class DefaultNavigation extends MouseAdapter implements KeyListener, Mous
 				synchronized (pressedKeys) {
 
 					for (int key : pressedKeys) {
-
-						switch (key) {
-						case KeyEvent.VK_Q:
-							c.roll(ANGLE_INCREMENT);
-							break;
-						case KeyEvent.VK_E:
-							c.roll(-ANGLE_INCREMENT);
-							break;
-						case KeyEvent.VK_W:
-							c.moveForward(MOVEMENT_INCREMENT);
-							break;
-						case KeyEvent.VK_S:
-							c.moveForward(-MOVEMENT_INCREMENT);
-							break;
-						case KeyEvent.VK_A:
-							c.moveRight(MOVEMENT_INCREMENT);
-							break;
-						case KeyEvent.VK_D:
-							c.moveRight(-MOVEMENT_INCREMENT);
-							break;
-						case KeyEvent.VK_PAGE_UP:
-							c.moveUp(MOVEMENT_INCREMENT);
-							break;
-						case KeyEvent.VK_PAGE_DOWN:
-							c.moveUp(-MOVEMENT_INCREMENT);
-							break;
-						case KeyEvent.VK_UP:
-							c.pitch(ANGLE_INCREMENT);
-							break;
-						case KeyEvent.VK_DOWN:
-							c.pitch(-ANGLE_INCREMENT);
-							break;
-						case KeyEvent.VK_RIGHT:
-							c.yaw(ANGLE_INCREMENT);
-							break;
-						case KeyEvent.VK_LEFT:
-							c.yaw(-ANGLE_INCREMENT);
-							break;
-						case KeyEvent.VK_PLUS:
-						case KeyEvent.VK_I:
-							zoom(true, 0.5);
-							break;
-						case KeyEvent.VK_MINUS:
-						case KeyEvent.VK_O:
-							zoom(false, 0.5);
-							break;
+						if(!"fr_FR".equals(localeContext)){
+							switch (key) {
+								case KeyEvent.VK_Q:
+									c.roll(ANGLE_INCREMENT);
+									break;
+								case KeyEvent.VK_E:
+									c.roll(-ANGLE_INCREMENT);
+									break;
+								case KeyEvent.VK_W:
+									c.moveForward(MOVEMENT_INCREMENT);
+									break;
+								case KeyEvent.VK_S:
+									c.moveForward(-MOVEMENT_INCREMENT);
+									break;
+								case KeyEvent.VK_A:
+									c.moveRight(MOVEMENT_INCREMENT);
+									break;
+								case KeyEvent.VK_D:
+									c.moveRight(-MOVEMENT_INCREMENT);
+									break;
+								case KeyEvent.VK_PAGE_UP:
+									c.moveUp(MOVEMENT_INCREMENT);
+									break;
+								case KeyEvent.VK_PAGE_DOWN:
+									c.moveUp(-MOVEMENT_INCREMENT);
+									break;
+								case KeyEvent.VK_UP:
+									c.pitch(ANGLE_INCREMENT);
+									break;
+								case KeyEvent.VK_DOWN:
+									c.pitch(-ANGLE_INCREMENT);
+									break;
+								case KeyEvent.VK_RIGHT:
+									c.yaw(ANGLE_INCREMENT);
+									break;
+								case KeyEvent.VK_LEFT:
+									c.yaw(-ANGLE_INCREMENT);
+									break;
+								case KeyEvent.VK_PLUS:
+								case KeyEvent.VK_I:
+									zoom(true, 0.5);
+									break;
+								case KeyEvent.VK_MINUS:
+								case KeyEvent.VK_O:
+									zoom(false, 0.5);
+									break;
+								}
+						}else{
+							switch (key) {
+							case KeyEvent.VK_A:
+								c.roll(ANGLE_INCREMENT);
+								break;
+							case KeyEvent.VK_E:
+								c.roll(-ANGLE_INCREMENT);
+								break;
+							case KeyEvent.VK_Z:
+								c.moveForward(MOVEMENT_INCREMENT);
+								break;
+							case KeyEvent.VK_S:
+								c.moveForward(-MOVEMENT_INCREMENT);
+								break;
+							case KeyEvent.VK_Q:
+								c.moveRight(MOVEMENT_INCREMENT);
+								break;
+							case KeyEvent.VK_D:
+								c.moveRight(-MOVEMENT_INCREMENT);
+								break;
+							case KeyEvent.VK_PAGE_UP:
+								c.moveUp(MOVEMENT_INCREMENT);
+								break;
+							case KeyEvent.VK_PAGE_DOWN:
+								c.moveUp(-MOVEMENT_INCREMENT);
+								break;
+							case KeyEvent.VK_UP:
+								c.pitch(ANGLE_INCREMENT);
+								break;
+							case KeyEvent.VK_DOWN:
+								c.pitch(-ANGLE_INCREMENT);
+								break;
+							case KeyEvent.VK_RIGHT:
+								c.yaw(ANGLE_INCREMENT);
+								break;
+							case KeyEvent.VK_LEFT:
+								c.yaw(-ANGLE_INCREMENT);
+								break;
+							case KeyEvent.VK_PLUS:
+							case KeyEvent.VK_I:
+								zoom(true, 0.5);
+								break;
+							case KeyEvent.VK_MINUS:
+							case KeyEvent.VK_O:
+								zoom(false, 0.5);
+								break;
+							}
+							
 						}
 					}
 				}

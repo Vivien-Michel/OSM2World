@@ -1,7 +1,7 @@
 package org.osm2world.core.target.jogl;
 
-import static javax.media.opengl.GL.GL_ARRAY_BUFFER;
-import static javax.media.opengl.GL.GL_STATIC_DRAW;
+import static com.jogamp.opengl.GL.GL_ARRAY_BUFFER;
+import static com.jogamp.opengl.GL.GL_STATIC_DRAW;
 import static org.osm2world.core.math.GeometryUtil.triangleNormalListFromTriangleStripOrFan;
 import static org.osm2world.core.math.GeometryUtil.triangleVertexListFromTriangleFan;
 import static org.osm2world.core.math.GeometryUtil.triangleVertexListFromTriangleStrip;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.media.opengl.GL;
+import com.jogamp.opengl.GL;
 
 import org.osm2world.core.math.VectorXYZ;
 import org.osm2world.core.math.VectorXZ;
